@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #shortened-url { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>URL Shortener</h1>
+    <form id="url-form">
+        <label for="original-url">Enter URL to shorten:</label>
+        <input type="text" id="original-url" required>
+        <button type="submit">Shorten</button>
+    </form>
+    <div id="shortened-url"></div>
+
+    <script>
+        function generateShortCode(length = 6) {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
+        }
+
+        document.getElementById('url-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const originalUrl = document.getElementById('original-url').value;
+            const shortCode = generateShortCode();
+            const shortenedUrl = `${window.location.origin}/${shortCode}`;
+            document.getElementById('shortened-url').innerHTML = `Shortened URL: <a href="${originalUrl}">${shortenedUrl}</a>`;
+        });
+    </script>
+</body>
+</html>
